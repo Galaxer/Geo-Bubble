@@ -5,12 +5,35 @@ pluginManagement {
         mavenCentral()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
     }
+
+    // Only using 'version' so lint warnings will continue to display for out of date dependencies.
+    versionCatalogs {
+
+        libs {
+            version('core-ktx', '1.9.0')
+            version('lifecycle-runtime-ktx', '2.5.1')
+            version('compose-ui', '1.3.0')
+            version('compose-activity', '1.6.1')
+            version('compose-nav', '2.5.3')
+            version('compose-hilt-nav', '1.0.0')
+            version('hilt', '2.44')
+            version('accompanist', '0.27.0')
+        }
+
+        testLibs {
+            version('junit', '4.13.2')
+            version('androidx-junit', '1.1.3')
+            version('espresso', '3.4.0')
+        }
+    }
 }
+
 rootProject.name = "Geo Bubble"
 include ':app'
