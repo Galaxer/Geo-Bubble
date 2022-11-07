@@ -25,6 +25,9 @@ dependencyResolutionManagement {
             version('compose-hilt-nav', '1.0.0')
             version('hilt', '2.44')
             version('accompanist', '0.27.0')
+            version('retrofit', '2.9.0')
+            version('moshi', '1.14.0')
+            version('kotlin-coroutines', '1.6.4')
         }
 
         testLibs {
@@ -36,4 +39,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Geo Bubble"
+
 include ':app'
+include ':data'
+include ':data:cities'

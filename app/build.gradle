@@ -53,6 +53,8 @@ android {
 
 dependencies {
 
+    implementation project(":data:cities")
+
     implementation "androidx.core:core-ktx:${libs.versions.core.ktx.get()}"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libs.versions.lifecycle.runtime.ktx.get()}"
     implementation "androidx.activity:activity-compose:${libs.versions.compose.activity.get()}"
