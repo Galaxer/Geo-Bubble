@@ -4,16 +4,19 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import info.ccook.geobubble.data.cities.models.City
 import info.ccook.geobubble.data.cities.network.CitiesEndpoints
+import info.ccook.geobubble.data.cities.network.models.CitySearchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 interface CitiesSearchRepository {
 
-    suspend fun searchCities(text: String): List<City>
+    suspend fun searchCities(text: String): Result<List<City>>
 }
 
 class CitiesSearchRepositoryImpl internal constructor(
@@ -26,10 +29,30 @@ class CitiesSearchRepositoryImpl internal constructor(
         mapper = MapperImpl()
     )
 
-    override suspend fun searchCities(text: String): List<City> {
+    override suspend fun searchCities(text: String): Result<List<City>> {
         return withContext(Dispatchers.IO) {
-            val body = endpoints.searchCities(text).body()!!
-            mapper.citiesSearchResponseToCities(body)
+            catchException {
+                val response = endpoints.searchCities(text)
+                if (response.isSuccessful) {
+                    val body = getResponseBody(response, CitySearchResponse())
+                    val mappedResponse = mapper.citiesSearchResponseToCities(body)
+                    Result.success(mappedResponse)
+                } else {
+                    Result.failure(HttpException(response))
+                }
+            }
+        }
+    }
+
+    private fun <T> getResponseBody(response: Response<T>, defaultValue: T): T {
+        return response.body() ?: defaultValue
+    }
+
+    private suspend fun <T> catchException(call: suspend () -> Result<T>): Result<T> {
+        return try {
+            call()
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

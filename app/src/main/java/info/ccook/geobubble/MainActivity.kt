@@ -42,8 +42,14 @@ fun Greeting(name: String) {
     Text(
         modifier = Modifier.clickable {
             scope.launch {
-                val result = CitiesSearchRepositoryImpl().searchCities("raleigh")
-                Log.e("result", "$result")
+                CitiesSearchRepositoryImpl()
+                    .searchCities("raleigh")
+                    .onSuccess { cities ->
+                        Log.e("result", "$cities")
+                    }
+                    .onFailure { exception ->
+                        Log.e("exception", "$exception")
+                    }
             }
 
         },
