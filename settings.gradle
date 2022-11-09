@@ -23,6 +23,7 @@ dependencyResolutionManagement {
             version('compose-activity', '1.6.1')
             version('compose-nav', '2.5.3')
             version('compose-hilt-nav', '1.0.0')
+            version('compose-material3', '1.0.0')
             version('hilt', '2.44')
             version('accompanist', '0.27.0')
             version('retrofit', '2.9.0')
@@ -43,3 +44,5 @@ rootProject.name = "Geo Bubble"
 include ':app'
 include ':data'
 include ':data:cities'
+include ':feature'
+include ':feature:search'

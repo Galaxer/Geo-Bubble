@@ -12,8 +12,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import info.ccook.geobubble.data.cities.CitiesSearchRepositoryImpl
+import info.ccook.geobubble.feature.search.ui.SearchScreen
 import info.ccook.geobubble.ui.theme.GeoBubbleTheme
 import kotlinx.coroutines.launch
 
@@ -23,13 +25,17 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             GeoBubbleTheme {
+
+                stringResource(id = info.ccook.geobubble.feature.search.R.string.feature_search_label)
+                
+                SearchScreen()
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colors.background
+//                ) {
+//                    Greeting("Android")
+//                }
             }
         }
     }
