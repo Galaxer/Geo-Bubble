@@ -1,5 +1,5 @@
 package info.ccook.geobubble.data.cities.models
 
-data class City(
+data class DataCity(
     val fullName: String = ""
 )

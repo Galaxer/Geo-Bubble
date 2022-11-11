@@ -1,4 +1,4 @@
-package info.ccook.geobubble.data
+package info.ccook.geobubble.domain
 
 import org.junit.Test
 

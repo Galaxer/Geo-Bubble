@@ -15,58 +15,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import info.ccook.geobubble.data.cities.CitiesSearchRepositoryImpl
+import info.ccook.geobubble.domain.SearchCitiesUseCase
+import info.ccook.geobubble.domain.SearchCitiesUseCaseImpl
 import info.ccook.geobubble.feature.search.ui.SearchScreen
+import info.ccook.geobubble.feature.search.ui.SearchScreenViewModel
 import info.ccook.geobubble.ui.theme.GeoBubbleTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             GeoBubbleTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    val viewModel =
+                        SearchScreenViewModel(SearchCitiesUseCaseImpl(CitiesSearchRepositoryImpl()))
 
-                stringResource(id = info.ccook.geobubble.feature.search.R.string.feature_search_label)
-                
-                SearchScreen()
-                // A surface container using the 'background' color from the theme
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colors.background
-//                ) {
-//                    Greeting("Android")
-//                }
+                    SearchScreen(
+                        screenState = viewModel.state,
+                        onSearch = { text ->
+                            viewModel.searchCities(text)
+                        }
+                    )
+                }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    val scope = rememberCoroutineScope()
-
-    Text(
-        modifier = Modifier.clickable {
-            scope.launch {
-                CitiesSearchRepositoryImpl()
-                    .searchCities("raleigh")
-                    .onSuccess { cities ->
-                        Log.e("result", "$cities")
-                    }
-                    .onFailure { exception ->
-                        Log.e("exception", "$exception")
-                    }
-            }
-
-        },
-        text = "Hello $name!"
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GeoBubbleTheme {
-        Greeting("Android")
     }
 }

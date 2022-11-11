@@ -55,6 +55,7 @@ dependencies {
 
     implementation project(":data:cities")
     implementation project(":feature:search")
+    implementation project(":domain")
 
     implementation "androidx.core:core-ktx:${libs.versions.core.ktx.get()}"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libs.versions.lifecycle.runtime.ktx.get()}"

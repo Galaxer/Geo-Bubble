@@ -1,54 +1,59 @@
 package info.ccook.geobubble.feature.search.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import info.ccook.geobubble.feature.search.R
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
+import info.ccook.geobubble.data.cities.models.DataCity
 
 @Composable
-fun SearchScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        SearchTextField()
+fun SearchScreen(
+    screenState: State<SearchScreenState> = mutableStateOf(SearchScreenState()),
+    onSearch: (String) -> Unit = {}
+) {
+    val state by screenState
+
+    val focusManager = LocalFocusManager.current
+
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(
+                indication = null,
+                interactionSource = interactionSource
+            ) { focusManager.clearFocus() }
+    ) {
+        SearchTextField(
+            focusManager = focusManager,
+            onSearch = onSearch
+        )
+
+        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            items(items = state.citySearchResults) {
+                Text(text = it.fullName)
+            }
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
-fun SearchTextField() {
-
-    val textState = remember { mutableStateOf("") }
-
-    TextField(
-        modifier = Modifier.fillMaxWidth(),
-        value = textState.value,
-        onValueChange = { textState.value = it },
-        label =  { SearchTextFieldLabel() },
-        singleLine = true,
-        leadingIcon = { SearchTextFieldIcon() },
-        maxLines = 1
-    )
-}
-
-@Composable
-fun SearchTextFieldLabel() {
-    Text(stringResource(id = R.string.feature_search_label))
-}
-
-@Composable
-fun SearchTextFieldIcon() {
-    Icon(
-        imageVector = Icons.Default.Search,
-        contentDescription = "Search"
+private fun SearchScreenPreview() {
+    SearchScreen(
+        screenState = remember {
+            mutableStateOf(SearchScreenState(
+                citySearchResults = listOf(DataCity("Test"))
+            ))
+        }
     )
 }

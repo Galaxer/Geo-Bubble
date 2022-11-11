@@ -1,20 +1,25 @@
 package info.ccook.geobubble.data.cities
 
-import info.ccook.geobubble.data.cities.models.City
-import info.ccook.geobubble.data.cities.network.models.CitySearchResponse
+import info.ccook.geobubble.data.cities.models.DataCity
+import info.ccook.geobubble.data.cities.network.models.ApiCitySearchResponse
+import info.ccook.geobubble.data.cities.network.models.ApiCitySearchResult
 
-internal interface Mapper {
-
-    fun citiesSearchResponseToCities(citiesSearchResponse: CitySearchResponse): List<City>
+/**
+ * Map a [ApiCitySearchResponse] to a [List] of [DataCity].
+ *
+ * @return [List] of [DataCity] or an empty [List].
+ */
+internal fun ApiCitySearchResponse.toDataModel(): List<DataCity> {
+    return this.embedded?.citySearchResults?.map { citySearchResult ->
+        citySearchResult.toDataModel()
+    } ?: listOf()
 }
 
-internal class MapperImpl : Mapper {
-
-    override fun citiesSearchResponseToCities(
-        citiesSearchResponse: CitySearchResponse
-    ): List<City> {
-        return citiesSearchResponse.embedded?.citySearchResults?.map { citySearchResult ->
-            City(fullName = citySearchResult.matchingFullName ?: "")
-        } ?: listOf()
-    }
+/**
+ * Map a [ApiCitySearchResult] to a [DataCity].
+ *
+ * @return [DataCity]
+ */
+internal fun ApiCitySearchResult.toDataModel(): DataCity {
+    return DataCity(fullName = this.matchingFullName ?: "")
 }

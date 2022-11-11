@@ -32,6 +32,7 @@ android {
 
 dependencies {
 
+    // Android Kotlin extensions
     implementation "androidx.core:core-ktx:${libs.versions.core.ktx.get()}"
 
     // Networking
@@ -41,7 +42,7 @@ dependencies {
     // Json Parsing
     implementation "com.squareup.moshi:moshi-kotlin:${libs.versions.moshi.get()}"
 
-    // Coroutines for asynchronous code execution
+    // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${libs.versions.kotlin.coroutines.get()}"
 
     // Unit Test

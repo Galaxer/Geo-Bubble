@@ -2,9 +2,9 @@ package info.ccook.geobubble.data.cities
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import info.ccook.geobubble.data.cities.models.City
+import info.ccook.geobubble.data.cities.models.DataCity
 import info.ccook.geobubble.data.cities.network.CitiesEndpoints
-import info.ccook.geobubble.data.cities.network.models.CitySearchResponse
+import info.ccook.geobubble.data.cities.network.models.ApiCitySearchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
@@ -16,27 +16,22 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 interface CitiesSearchRepository {
 
-    suspend fun searchCities(text: String): Result<List<City>>
+    suspend fun searchCities(text: String): Result<List<DataCity>>
 }
 
 class CitiesSearchRepositoryImpl internal constructor(
-    private val endpoints: CitiesEndpoints,
-    private val mapper: Mapper
+    private val endpoints: CitiesEndpoints
 ) : CitiesSearchRepository {
 
-    constructor() : this(
-        endpoints = citiesEndpoints,
-        mapper = MapperImpl()
-    )
+    constructor() : this(endpoints = citiesEndpoints)
 
-    override suspend fun searchCities(text: String): Result<List<City>> {
+    override suspend fun searchCities(text: String): Result<List<DataCity>> {
         return withContext(Dispatchers.IO) {
             catchException {
                 val response = endpoints.searchCities(text)
                 if (response.isSuccessful) {
-                    val body = getResponseBody(response, CitySearchResponse())
-                    val mappedResponse = mapper.citiesSearchResponseToCities(body)
-                    Result.success(mappedResponse)
+                    val body = getResponseBody(response, ApiCitySearchResponse())
+                    Result.success(body.toDataModel())
                 } else {
                     Result.failure(HttpException(response))
                 }
