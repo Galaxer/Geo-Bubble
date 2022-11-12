@@ -1,29 +1,22 @@
 package info.ccook.geobubble.data.cities
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import info.ccook.geobubble.data.cities.models.DataCity
 import info.ccook.geobubble.data.cities.network.CitiesEndpoints
 import info.ccook.geobubble.data.cities.network.models.ApiCitySearchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 interface CitiesSearchRepository {
 
     suspend fun searchCities(text: String): Result<List<DataCity>>
 }
 
-class CitiesSearchRepositoryImpl internal constructor(
+class CitiesSearchRepositoryImpl @Inject internal constructor(
     private val endpoints: CitiesEndpoints
 ) : CitiesSearchRepository {
-
-    constructor() : this(endpoints = citiesEndpoints)
 
     override suspend fun searchCities(text: String): Result<List<DataCity>> {
         return withContext(Dispatchers.IO) {
@@ -51,35 +44,3 @@ class CitiesSearchRepositoryImpl internal constructor(
         }
     }
 }
-
-private val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-
-private val moshiConverterFactory = MoshiConverterFactory.create(moshi)
-
-private object HeaderName {
-    const val ACCEPT = "Accept"
-}
-
-private object API {
-    const val BASE_URL = "https://api.teleport.org/api/"
-    const val ACCEPT_HEADER = "application/vnd.teleport.v1+json"
-}
-
-private val interceptor = Interceptor { chain ->
-    val request = chain
-        .request()
-        .newBuilder()
-        .addHeader(HeaderName.ACCEPT, API.ACCEPT_HEADER)
-        .build()
-    return@Interceptor chain.proceed(request)
-}
-
-private val httpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
-
-private val retrofit = Retrofit.Builder()
-    .baseUrl(API.BASE_URL)
-    .client(httpClient)
-    .addConverterFactory(moshiConverterFactory)
-    .build()
-
-private val citiesEndpoints = retrofit.create(CitiesEndpoints::class.java)
