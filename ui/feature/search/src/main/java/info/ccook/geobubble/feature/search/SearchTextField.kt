@@ -47,12 +47,12 @@ internal fun SearchTextField(
 }
 
 @Composable
-internal fun SearchTextFieldLabel() {
-    Text(stringResource(id = R.string.feature_search_label))
+private fun SearchTextFieldLabel() {
+    Text(text = stringResource(id = R.string.feature_search_label))
 }
 
 @Composable
-internal fun SearchTextFieldIcon() {
+private fun SearchTextFieldIcon() {
     Icon(
         imageVector = Icons.Default.Search,
         contentDescription = "Search"
