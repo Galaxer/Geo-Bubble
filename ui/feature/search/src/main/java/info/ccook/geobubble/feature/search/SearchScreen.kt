@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import info.ccook.geobubble.ui.models.City
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.Module
@@ -23,12 +24,14 @@ import info.ccook.geobubble.domain.SearchCitiesUseCaseImpl
 import info.ccook.geobubble.domain.di.DomainSearchModule
 
 @Composable
-fun SearchScreenContainer(viewModel: SearchScreenViewModel = viewModel()) {
+fun SearchScreenContainer(viewModel: SearchScreenViewModel = hiltViewModel()) {
 
-    val state by viewModel.state
+    val state by viewModel.state.collectAsState()
 
-    val onSearch = { text: String ->
-        viewModel.searchCities(text)
+    val onSearch = remember {
+        { text: String ->
+            viewModel.searchCities(text)
+        }
     }
 
     SearchScreen(

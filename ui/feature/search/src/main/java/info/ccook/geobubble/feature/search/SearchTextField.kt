@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import info.ccook.geobubble.ui.feature.search.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

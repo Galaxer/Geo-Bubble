@@ -41,12 +41,15 @@ dependencyResolutionManagement {
 
 rootProject.name = "Geo Bubble"
 
+include ':app'
+
 include ':ui'
-include ':ui:app'
 include ':ui:feature'
 include ':ui:feature:search'
+include ':ui:feature:home'
+
+include ':domain'
 
 include ':data'
 include ':data:cities'
-
-include ':domain'
+include ':testUtils'

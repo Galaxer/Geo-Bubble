@@ -1,4 +1,4 @@
-package info.ccook.geobubble.feature.search
+package info.ccook.geobubble.ui.feature.home
 
 import org.junit.Test
 

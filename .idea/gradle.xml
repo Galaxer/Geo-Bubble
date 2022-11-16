@@ -10,12 +10,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/cities" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/testUtils" />
             <option value="$PROJECT_DIR$/ui" />
-            <option value="$PROJECT_DIR$/ui/app" />
             <option value="$PROJECT_DIR$/ui/feature" />
+            <option value="$PROJECT_DIR$/ui/feature/home" />
             <option value="$PROJECT_DIR$/ui/feature/search" />
           </set>
         </option>

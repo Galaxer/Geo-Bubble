@@ -65,6 +65,9 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.ui.get()}"
     implementation "androidx.compose.material:material:${libs.versions.compose.ui.get()}"
 
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:${libs.versions.compose.nav.get()}"
+
     // DI
     implementation "com.google.dagger:hilt-android:${libs.versions.hilt.get()}"
     kapt "com.google.dagger:hilt-compiler:${libs.versions.hilt.get()}"

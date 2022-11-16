@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import info.ccook.geobubble.feature.search.SearchScreenContainer
 import info.ccook.geobubble.ui.theme.GeoBubbleTheme
 
 @AndroidEntryPoint
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    SearchScreenContainer()
+                    MainNavHost()
                 }
             }
         }
