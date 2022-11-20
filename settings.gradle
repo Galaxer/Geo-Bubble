@@ -18,7 +18,7 @@ dependencyResolutionManagement {
 
         libs {
             version('core-ktx', '1.9.0')
-            version('lifecycle-runtime-ktx', '2.5.1')
+            version('androidx-lifecycle', '2.5.1')
             version('compose-ui', '1.3.0')
             version('compose-activity', '1.6.1')
             version('compose-nav', '2.5.3')
@@ -35,6 +35,7 @@ dependencyResolutionManagement {
             version('junit', '4.13.2')
             version('androidx-junit', '1.1.3')
             version('espresso', '3.4.0')
+            version('mockito', '4.8.1')
         }
     }
 }
@@ -42,6 +43,7 @@ dependencyResolutionManagement {
 rootProject.name = "Geo Bubble"
 
 include ':app'
+include ':testUtils'
 
 include ':ui'
 include ':ui:feature'
@@ -52,4 +54,3 @@ include ':domain'
 
 include ':data'
 include ':data:cities'
-include ':testUtils'

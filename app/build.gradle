@@ -59,7 +59,7 @@ dependencies {
     implementation project(":ui:feature:search")
 
     implementation "androidx.core:core-ktx:${libs.versions.core.ktx.get()}"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libs.versions.lifecycle.runtime.ktx.get()}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libs.versions.androidx.lifecycle.get()}"
     implementation "androidx.activity:activity-compose:${libs.versions.compose.activity.get()}"
     implementation "androidx.compose.ui:ui:${libs.versions.compose.ui.get()}"
     implementation "androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.ui.get()}"
