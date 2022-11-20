@@ -24,5 +24,4 @@ jobs:
     # Run unit testing
     - name: Run unit testing
       run: |
-        cd GeoBubble/
         ./gradlew test
