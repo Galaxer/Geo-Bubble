@@ -27,7 +27,7 @@ class SearchScreenTest {
     }
 
     @Test
-    fun searchImeAction_isSearch() {
+    fun searchResults_exists() {
         val testCityName1 = "Test City Name 1"
         val testCityName2 = "Test City Name 2"
 
