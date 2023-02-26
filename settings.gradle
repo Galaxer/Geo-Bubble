@@ -19,11 +19,13 @@ dependencyResolutionManagement {
         libs {
             version('core-ktx', '1.9.0')
             version('androidx-lifecycle', '2.5.1')
-            version('compose-ui', '1.3.0')
+            version('compose-ui', '1.3.3')
             version('compose-activity', '1.6.1')
             version('compose-nav', '2.5.3')
             version('compose-hilt-nav', '1.0.0')
+            version('compose-material', '1.3.1')
             version('compose-material3', '1.0.0')
+            version('compose-compiler', '1.4.3')
             version('hilt', '2.44.2')
             version('accompanist', '0.27.0')
             version('retrofit', '2.9.0')
@@ -33,8 +35,8 @@ dependencyResolutionManagement {
 
         testLibs {
             version('junit', '4.13.2')
-            version('androidx-junit', '1.1.3')
-            version('espresso', '3.4.0')
+            version('androidx-junit', '1.1.5')
+            version('espresso', '3.5.1')
             version('mockito', '4.8.1')
         }
     }

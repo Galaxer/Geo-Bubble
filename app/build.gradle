@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -43,7 +43,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.1.1'
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
 
     packagingOptions {
@@ -63,7 +63,7 @@ dependencies {
     implementation "androidx.activity:activity-compose:${libs.versions.compose.activity.get()}"
     implementation "androidx.compose.ui:ui:${libs.versions.compose.ui.get()}"
     implementation "androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.ui.get()}"
-    implementation "androidx.compose.material:material:${libs.versions.compose.ui.get()}"
+    implementation "androidx.compose.material:material:${libs.versions.compose.material.get()}"
 
     // Navigation
     implementation "androidx.navigation:navigation-compose:${libs.versions.compose.nav.get()}"
