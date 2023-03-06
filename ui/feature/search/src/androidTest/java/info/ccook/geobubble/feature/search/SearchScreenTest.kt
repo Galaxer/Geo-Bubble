@@ -1,8 +1,10 @@
 package info.ccook.geobubble.feature.search
 
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import info.ccook.geobubble.ui.feature.search.R
 import info.ccook.geobubble.ui.models.City
@@ -40,7 +42,33 @@ class SearchScreenTest {
             SearchScreen(citySearchResults = citySearchResults)
         }
 
-        composeTestRule.onNodeWithText(testCityName1).assertExists()
-        composeTestRule.onNodeWithText(testCityName2).assertExists()
+        composeTestRule.onNodeWithText(testCityName1).assertIsDisplayed()
+        composeTestRule.onNodeWithText(testCityName2).assertIsDisplayed()
+    }
+
+    @Test
+    fun loading_indicator_is_displayed() {
+        composeTestRule.setContent {
+            SearchScreen(isLoading = true)
+        }
+
+        val activity = composeTestRule.activity
+        val loadingContentDescription = activity
+            .getString(R.string.feature_search_loading_content_desc)
+
+        composeTestRule.onNodeWithContentDescription(loadingContentDescription).assertIsDisplayed()
+    }
+
+    @Test
+    fun loading_indicator_is_not_displayed() {
+        composeTestRule.setContent {
+            SearchScreen()
+        }
+
+        val activity = composeTestRule.activity
+        val loadingContentDescription = activity
+            .getString(R.string.feature_search_loading_content_desc)
+
+        composeTestRule.onNodeWithContentDescription(loadingContentDescription).assertDoesNotExist()
     }
 }

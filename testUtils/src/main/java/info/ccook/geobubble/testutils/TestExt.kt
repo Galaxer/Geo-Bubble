@@ -9,7 +9,7 @@ import org.junit.Assert.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <S, R> StateViewModel<S, R>.assertState(
     vararg expected: S,
-    call: () -> Unit,
+    call: () -> Unit
 ): Unit = runTest {
     assertState(expected.toList(), call)
 }
@@ -17,11 +17,11 @@ fun <S, R> StateViewModel<S, R>.assertState(
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <S, R> StateViewModel<S, R>.assertState(
     expected: List<S>,
-    call: () -> Unit,
+    call: () -> Unit
 ): Unit = runTest {
-    val testObserve = state.test(this)
+    val testObserver = state.test(this)
     call()
     advanceUntilIdle()
-    assertEquals(expected.size, testObserve.getValueCount())
-    testObserve.assertValues(expected).finish()
+    assertEquals(expected.size, testObserver.getValueCount())
+    testObserver.assertValues(expected).finish()
 }

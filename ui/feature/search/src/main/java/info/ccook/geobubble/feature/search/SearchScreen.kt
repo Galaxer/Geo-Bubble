@@ -27,14 +27,16 @@ fun SearchScreenContainer(viewModel: SearchScreenViewModel = hiltViewModel()) {
 
     SearchScreen(
         citySearchResults = state.citySearchResults,
-        onSearch = onSearch
+        onSearch = onSearch,
+        isLoading = state.isLoading
     )
 }
 
 @Composable
 internal fun SearchScreen(
     citySearchResults: List<City> = listOf(),
-    onSearch: (String) -> Unit = remember { {} }
+    onSearch: (String) -> Unit = remember { {} },
+    isLoading: Boolean = false
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -55,12 +57,36 @@ internal fun SearchScreen(
 
         SearchResults(results = citySearchResults)
     }
+
+    SearchFullScreenLoadingIndicator(isLoading = isLoading)
 }
 
 @Preview
 @Composable
-private fun SearchScreenPreview() {
+private fun SearchScreenPreviewOneResult() {
+    val searchResults = listOf(City("Raleigh"))
     SearchScreen(
-        citySearchResults = listOf(City("Raleigh"))
+        citySearchResults = searchResults
+    )
+}
+
+@Preview
+@Composable
+private fun SearchScreenPreviewMultipleResults() {
+    val searchResults = listOf(
+        City("Raleigh"),
+        City("Richmond"),
+        City("Cary")
+    )
+    SearchScreen(
+        citySearchResults = searchResults
+    )
+}
+
+@Preview
+@Composable
+private fun SearchScreenPreviewIsLoading() {
+    SearchScreen(
+        isLoading = true
     )
 }

@@ -1,25 +1,30 @@
 package info.ccook.geobubble.testutils
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert.assertEquals
 
-fun <T> Flow<T>.test(scope: CoroutineScope): TestObserver<T> {
+@OptIn(ExperimentalCoroutinesApi::class)
+fun <T> Flow<T>.test(scope: TestScope): TestObserver<T> {
     return TestObserver(scope, this)
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TestObserver<T>(
-    scope: CoroutineScope,
+    scope: TestScope,
     flow: Flow<T>
 ) {
     private val values = mutableListOf<T>()
 
-    private val job: Job = scope.launch {
-        flow.collect {
-            values.add(it)
-        }
+    private val job: Job = scope.launch(UnconfinedTestDispatcher(scope.testScheduler)) {
+        flow.onEach { values.add(it) }.launchIn(this)
     }
 
     fun getValueCount(): Int {

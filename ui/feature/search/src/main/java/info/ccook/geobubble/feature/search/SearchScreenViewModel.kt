@@ -21,15 +21,29 @@ class SearchScreenViewModel @Inject constructor(
     ): SearchScreenState {
         return when (result) {
             is SearchScreenResult.OnSearchSuccess -> {
-                previousState.copy(citySearchResults = result.cities)
+                previousState.copy(
+                    citySearchResults = result.cities,
+                    isLoading = false
+                )
             }
             SearchScreenResult.OnSearchFailure -> {
-                previousState.copy(isError = true)
+                previousState.copy(
+                    isError = true,
+                    isLoading = false
+                )
+            }
+            is SearchScreenResult.Loading -> {
+                previousState.copy(isLoading = result.isLoading)
             }
         }
     }
 
+    fun setLoading(isLoading: Boolean = true) {
+        updateState(SearchScreenResult.Loading(isLoading))
+    }
+
     fun searchCities(text: String) {
+        setLoading()
         viewModelScope.launch {
             searchCitiesUseCase(text)
                 .onSuccess { domainCities ->
@@ -55,4 +69,6 @@ sealed class SearchScreenResult {
     }
 
     object OnSearchFailure : SearchScreenResult()
+
+    data class Loading(val isLoading: Boolean = true) : SearchScreenResult()
 }
