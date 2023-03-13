@@ -19,11 +19,13 @@ jobs:
       - name: Run unit tests
         run: |
           ./gradlew test
-      - name: Unit tests results
-        uses: actions/upload-artifact@v1
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2.4.2
+        if: always()
         with:
-          name: unit-tests-results
-          path: app/build/reports/tests/testDebugUnitTest/index.html
+          files: |
+            test-results/**/*.xml
+
 
   ui_test:
     runs-on: macos-latest
